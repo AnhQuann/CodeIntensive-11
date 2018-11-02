@@ -5,12 +5,10 @@ import java.awt.image.BufferedImage;
 
 public class GameObject {
 
-    BufferedImage image;
-    int x;
-    int y;
-
+    public BufferedImage image;
+    public Vector2D position;
     public GameObject() {
-
+        this.position = new Vector2D();
     }
 
     public void run(){
@@ -18,7 +16,7 @@ public class GameObject {
     }
 
     public void render(Graphics g) {
-        g.drawImage(this.image, this.x, this.y, null);
+        g.drawImage(this.image, (int) this.position.x, (int)this.position.y, null);
     }
 
 }
