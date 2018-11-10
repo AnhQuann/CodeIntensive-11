@@ -2,7 +2,9 @@ package base.enemy;
 
 import base.GameObject;
 import base.game.GameCanvas;
+import base.game.Setting;
 import base.renderer.SingleImageRenderer;
+import com.sun.scenario.Settings;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
@@ -18,6 +20,18 @@ public class EnemyBullet extends GameObject {
     public void run() {
         super.run();
         this.position.addThis(0, 7);
+        if (this.position.y < -20){
+            this.destroy();
+        }
+        if (this.position.y > Setting.SCREEN_HEIGHT) {
+            this.destroy();
+        }
+        if (this.position.x < -20){
+            this.destroy();
+        }
+        if (this.position.x > Setting.SCREEN_WIDTH) {
+            this.destroy();
+        }
     }
 
 }

@@ -3,8 +3,10 @@ package tklibs;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by huynq on 5/11/17.
@@ -18,6 +20,17 @@ public class SpriteUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static ArrayList<BufferedImage> loadImages(String...urls) {
+        ArrayList<BufferedImage> images = new ArrayList<>();
+        for(String url: urls) {
+            BufferedImage image = loadImage(url);
+            if (image != null) {
+                images.add(image);
+            }
+        }
+        return images;
     }
 
     public static void renderAtCenter(Graphics graphics, BufferedImage image, double x, double y) {

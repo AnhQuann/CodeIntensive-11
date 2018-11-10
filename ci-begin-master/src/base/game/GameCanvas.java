@@ -14,28 +14,22 @@ import java.util.ArrayList;
 public class GameCanvas extends JPanel {
     public GameObject background;
     public GameObject player;
-    public GameObject enemy;
-    public static ArrayList<PlayerBullet> bullets;
-    public static ArrayList<EnemyBullet> enemyBullets;
+
 
     public GameCanvas() {
-        this.background = new Background();
-        this.player = new Player();
-        this.enemy = new Enemy();
-        GameCanvas.bullets = new ArrayList<>();
-        GameCanvas.enemyBullets = new ArrayList<>();
+        this.background = GameObject.recycle(Background.class);
+        this.player = GameObject.recycle(Player.class);
+        Enemy enemy = GameObject.recycle(Enemy.class);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        this.background.render(g);
-        this.player.render(g);
-        this.enemy.render(g);
-        for (PlayerBullet bullet:bullets) {
-            bullet.render(g);
-        }
-        for (EnemyBullet enemyBullet:enemyBullets) {
-            enemyBullet.render(g);
+//        for (GameObject gameObject: GameObject.gameObjects) {
+        for (int i = 0; i < GameObject.gameObjects.size(); i++) {
+            GameObject gameObject = GameObject.gameObjects.get(i);
+            if (gameObject.isActive) {
+                gameObject.render(g);
+            }
         }
 
     }
@@ -55,16 +49,14 @@ public class GameCanvas extends JPanel {
     }
 
     public void runAll() {
-        this.background.run();
-        this.player.run();
-        this.enemy.run();
-        for (PlayerBullet bullet : bullets) {
-            bullet.run();
+//      for(GameObject gameObject : GameObject.gameObjects) {
+        for (int i = 0; i < GameObject.gameObjects.size(); i++) {
+            GameObject gameObject = GameObject.gameObjects.get(i);
+            if (gameObject.isActive) {
+                gameObject.run();
+            }
         }
-//        }
-        for (EnemyBullet enemyBullet: enemyBullets) {
-            enemyBullet.run();
-        }
+        System.out.println(GameObject.gameObjects.size());
     }
 
     public void renderAll() {
