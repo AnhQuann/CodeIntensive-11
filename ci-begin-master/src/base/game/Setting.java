@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 public class Setting {
     public static int SCREEN_WIDTH = 800;
     public static int SCREEN_HEIGHT = 600;
+    public static int BACKGROUND_WIDTH = 384;
     public static int UP_BUTTON = KeyEvent.VK_W;
     public static int LEFT_BUTTON = KeyEvent.VK_A;
     public static int DOWN_BUTTON = KeyEvent.VK_S;

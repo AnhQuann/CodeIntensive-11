@@ -78,8 +78,7 @@ public class Vector2D {
 
     public Vector2D setLength(float length) {
         float currentLength = this.length();
-        this.scale(length/ currentLength);
+        this.scaleThis(length/ currentLength);
         return this;
     }
-
 }

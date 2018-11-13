@@ -6,6 +6,7 @@ import base.GameObject;
 import base.KeyEventPress;
 import base.renderer.AnimationRenderer;
 import base.renderer.SingleImageRenderer;
+import com.sun.xml.internal.bind.v2.TODO;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
@@ -35,29 +36,50 @@ public class Player extends GameObject {
 
     @Override
     public void run() {
+        this.move();
+        if(this.fireCounter.run()) {
+            if (KeyEventPress.isFirePress) {
+                this.fire();
+            }
+        }
+        super.run();
+    }
+
+    private void move() {
+        //TODO upgrade
+        int vx = 0;
+        int vy = 0;
         if (KeyEventPress.isUpPress) {
-           this.position.substractThis(0, 5);
+            vy -= 5;
+//            this.velocity.set(0, -5);
         }
         if(KeyEventPress.isLeftPress) {
-            this.position.substractThis(5, 0);
+            vx -= 5;
+//            this.velocity.set(-5, 0);
         }
         if(KeyEventPress.isDownPress) {
-            this.position.addThis(0, 5);
+            vy += 5;
+//            this.velocity.set(0, 5);
         }
         if(KeyEventPress.isRightPress) {
-            this.position.addThis(5, 0);
+            vx += 5;
+//            this.velocity.set(5, 0);
         }
-        if(KeyEventPress.isFirePress) {
-            this.fire();
-        }
+        this.velocity.set(vx, vy);
     }
 
     private void fire() {
-        if (this.fireCounter.run()) {
-            PlayerBullet bullet = GameObject.recycle(PlayerBullet.class);
-            bullet.position.set(this.position);
-            this.fireCounter.reset();
-        }
+        PlayerBulletType1 bullet = GameObject.recycle(PlayerBulletType1.class);
+        bullet.position.set(this.position);
 
+        PlayerBulletType2 bullet2 = GameObject.recycle(PlayerBulletType2.class);
+        bullet2.position.set(this.position.add(-25, 0));
+        bullet2.velocity.set(-5, -5);
+
+//        PlayerBulletType2 bullet3 = GameObject.recycle(PlayerBulletType2.class);
+//        bullet3.position.set(this.position.add(25, 0));
+//        bullet3.velocity.set(5, -5);
+
+        this.fireCounter.reset();
     }
 }

@@ -15,8 +15,9 @@ public class Enemy extends GameObject {
     FrameCounter fireCounter;
     public Enemy() {
         super();
-        this.createRenderer();
         this.position.set(200, 100);
+        this.velocity.set(0, 3);
+        this.createRenderer();
         this.fireCounter = new FrameCounter(20);
     }
 
@@ -34,6 +35,9 @@ public class Enemy extends GameObject {
     public void run() {
         super.run();
 //        this.position.addThis(0, 2);
+        if (this.position.y >= 300) {
+            this.velocity.set(0, 0);
+        }
         this.fire();
     }
     //TODO: replaceFrameCounter

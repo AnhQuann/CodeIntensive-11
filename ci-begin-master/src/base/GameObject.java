@@ -47,11 +47,13 @@ public class GameObject {
     public Vector2D position;
     public Renderer renderer;
     public boolean isActive;
+    public Vector2D velocity;
 
 
     public GameObject() {
         this.position = new Vector2D();
         this.isActive = true;
+        this.velocity = new Vector2D();
     }
 
     public void destroy() {
@@ -63,7 +65,7 @@ public class GameObject {
     }
 
     public void run(){
-
+        this.position.addThis(this.velocity);
     }
 
     public void render(Graphics g) {

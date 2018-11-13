@@ -1,21 +1,16 @@
 package base.player;
 
-import base.GameObject;
-import base.Vector2D;
-import base.enemy.Enemy;
 import base.game.Setting;
 import base.renderer.AnimationRenderer;
-import base.renderer.SingleImageRenderer;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class PlayerBullet extends GameObject {
-
-    public PlayerBullet() {
+public class PlayerBulletType1 extends PlayerBullet {
+    public PlayerBulletType1() {
         super();
-        this.velocity.set(0, -5);
+        this.createRenderer();
     }
 
     private void createRenderer() {
