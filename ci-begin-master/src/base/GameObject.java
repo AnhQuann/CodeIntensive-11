@@ -1,5 +1,7 @@
 package base;
 
+import base.physics.BoxCollider;
+import base.physics.Physics;
 import base.player.Player;
 import base.renderer.Renderer;
 import com.sun.xml.internal.bind.v2.TODO;
@@ -37,6 +39,30 @@ public class GameObject {
         }
         E newGameObject = create(clazz);
         return newGameObject;
+    }
+
+    /**
+     * tra ve 1 gameObject co kieu clazz(E) intersect voi gameObject
+     * truyen vao
+      * @param clazz
+     * @param boxCollider
+     * @param <E>
+     * @return
+     */
+    public static <E extends GameObject> E intersects(Class<E> clazz, BoxCollider boxCollider) {
+        //gameObject > result(result instanceof E, result instanceof Physics)
+        // result.getBoxCollider.intersects(boxCollider)
+        int size = gameObjects.size();
+        for (int i = 0; i < size; i++) {
+            GameObject gameObject = gameObjects.get(i);
+            if (gameObject.isActive && gameObject.getClass().isAssignableFrom(clazz) && gameObject instanceof Physics) {
+                Physics gameObjectPhysics = (Physics)gameObject;
+                if (gameObjectPhysics.getBoxCollider().intersects(boxCollider)) {
+                    return (E)gameObject;
+                }
+            }
+        }
+        return null;
     }
 
     private static boolean isValidRecycle(GameObject gameObject, Class clazz) {

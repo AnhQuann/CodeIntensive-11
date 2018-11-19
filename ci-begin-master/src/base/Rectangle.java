@@ -15,22 +15,23 @@ public class Rectangle {
         this.height = height;
     }
 
+    public int top() {
+        return (int)this.position.y;
+    }
+    public int bot() {
+        return (int)this.position.y + this.height;
+    }
+    public int left() {
+        return (int)this.position.x;
+    }
+    public int right() {
+        return (int) this.position.x + this.width;
+    }
+
     public boolean intersects(Rectangle other) {
-        float left1 = this.position.x - this.width/2;
-        float right1 = this.position.x + this.width/2;
-        float top1 = this.position.y - this.height/2;
-        float bot1 = this.position.y + this.height/2;
-
-        float left2 = other.position.x - other.width/2;
-        float right2 = other.position.x + other.width/2;
-        float top2 = other.position.y - other.height/2;
-        float bot2 = other.position.y + other.height/2;
-
-        if (left1 <= right2 && right1 >= left2 && top1 <= bot2 && bot1 >= top2){
-            return true;
-        } else {
-            return false;
-        }
+        boolean intersectX = this.left() <= other.right() && other.left() <= this.right();
+        boolean intersectY = this.top() <= other.bot() && other.top() <= this.bot();
+        return intersectX && intersectY;
     }
 
     public static void main(String[] args) {

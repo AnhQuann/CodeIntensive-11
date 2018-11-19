@@ -4,6 +4,8 @@ import base.GameObject;
 import base.Vector2D;
 import base.enemy.Enemy;
 import base.game.Setting;
+import base.physics.BoxCollider;
+import base.physics.Physics;
 import base.renderer.AnimationRenderer;
 import base.renderer.SingleImageRenderer;
 import tklibs.SpriteUtils;
@@ -11,11 +13,12 @@ import tklibs.SpriteUtils;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class PlayerBullet extends GameObject {
-
+public class PlayerBullet extends GameObject implements Physics {
+    BoxCollider boxCollider;
     public PlayerBullet() {
         super();
         this.velocity.set(0, -5);
+        this.boxCollider = new BoxCollider(this.position, 24, 24);
     }
 
     private void createRenderer() {
@@ -32,6 +35,15 @@ public class PlayerBullet extends GameObject {
     public void run() {
         super.run();
         this.destroyNeeded();
+        this.hitEnemy();
+    }
+
+    private void hitEnemy() {
+        Enemy enemy = GameObject.intersects(Enemy.class, this.boxCollider);
+        if (enemy != null) {
+            enemy.destroy();
+            this.destroy();
+        }
     }
 
     private void destroyNeeded() {
@@ -39,5 +51,10 @@ public class PlayerBullet extends GameObject {
                 this.position.x < 0 || this.position.x >= Setting.BACKGROUND_WIDTH) {
             this.destroy();
         }
+    }
+
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.boxCollider;
     }
 }
