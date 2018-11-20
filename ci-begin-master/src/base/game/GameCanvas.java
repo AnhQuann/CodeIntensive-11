@@ -4,6 +4,7 @@ import base.Background;
 import base.GameObject;
 import base.enemy.Enemy;
 import base.enemy.EnemyBullet;
+import base.enemy.EnemySummoner;
 import base.player.Player;
 import base.player.PlayerBullet;
 
@@ -14,12 +15,13 @@ import java.util.ArrayList;
 public class GameCanvas extends JPanel {
     public GameObject background;
     public GameObject player;
-
+    public EnemySummoner enemySummoner;
 
     public GameCanvas() {
         this.background = GameObject.recycle(Background.class);
         this.player = GameObject.recycle(Player.class);
-        Enemy enemy = GameObject.recycle(Enemy.class);
+//        Enemy enemy = GameObject.recycle(Enemy.class);
+        this.enemySummoner = GameObject.recycle(EnemySummoner.class);
     }
 
     @Override

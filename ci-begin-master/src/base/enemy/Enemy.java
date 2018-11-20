@@ -10,12 +10,17 @@ import base.renderer.AnimationRenderer;
 import base.renderer.SingleImageRenderer;
 import tklibs.SpriteUtils;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Enemy extends GameObject implements Physics {
     FrameCounter fireCounter;
     BoxCollider boxCollider;
+    int hp;
+    boolean immune;
+    FrameCounter immuneCounter;
+
     public Enemy() {
         super();
         this.position.set(200, 100);
@@ -23,6 +28,9 @@ public class Enemy extends GameObject implements Physics {
         this.createRenderer();
         this.fireCounter = new FrameCounter(20);
         this.boxCollider = new BoxCollider(this.position, 32, 32);
+        this.hp = 3;
+        this.immune = false;
+        this.immuneCounter = new FrameCounter(20);
     }
 
     private void createRenderer() {
@@ -54,6 +62,19 @@ public class Enemy extends GameObject implements Physics {
         }
     }
 
+    public void takeDamage(int damage) {
+        if (this.immune) {
+            return;
+        }
+        this.hp -= damage;
+        if (this.hp <= 0) {
+            this.hp = 0;
+            this.destroy();
+        } else {
+            this.immune = true;
+        }
+    }
+
     @Override
     public void destroy() {
         super.destroy();
@@ -62,8 +83,32 @@ public class Enemy extends GameObject implements Physics {
     }
 
     @Override
+    public void reset() {
+        super.reset();
+        this.velocity.set(0,3);
+        this.immune = false;
+        this.immuneCounter.reset();
+        this.hp = 3;
+    }
+
+    @Override
     public BoxCollider getBoxCollider() {
         return this.boxCollider;
+    }
+
+    @Override
+    public void render(Graphics g) {
+        if (this.immune) {
+            if (this.immuneCounter.run()){
+                this.immune = false;
+                this.immuneCounter.reset();
+            }
+            if (this.immuneCounter.count % 4 == 0){
+                super.render(g);
+            }
+        } else {
+            super.render(g);
+        }
     }
 }
 

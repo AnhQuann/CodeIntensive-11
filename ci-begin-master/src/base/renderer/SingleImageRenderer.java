@@ -14,6 +14,8 @@ public class SingleImageRenderer extends Renderer {
 
     @Override
     public void render(Graphics g, GameObject master) {
-        g.drawImage(this.image, (int)master.position.x, (int)master.position.y, null);
+        int x = (int)(master.position.x - master.anchor.x * image.getWidth());
+        int y = (int)(master.position.y - master.anchor.y * image.getHeight());
+        g.drawImage(this.image, x, y, null);
     }
 }

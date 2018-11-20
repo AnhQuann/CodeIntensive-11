@@ -30,7 +30,10 @@ public class AnimationRenderer extends Renderer {
 
     @Override
     public void render(Graphics g, GameObject master) {
-        g.drawImage(this.images.get(currentImageIndex), (int)master.position.x, (int)master.position.y, null);
+        BufferedImage currentImage = this.images.get(currentImageIndex);
+        int x = (int)(master.position.x - master.anchor.x * currentImage.getWidth());
+        int y = (int)(master.position.y - master.anchor.y * currentImage.getHeight());
+        g.drawImage(currentImage, x, y, null);
 
         if (this.nextImageCounter.run()) {
             this.currentImageIndex++;

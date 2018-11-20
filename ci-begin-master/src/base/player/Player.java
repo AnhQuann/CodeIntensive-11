@@ -1,6 +1,7 @@
 package base.player;
 
 import base.FrameCounter;
+import base.action.Action;
 import base.game.GameCanvas;
 import base.GameObject;
 import base.KeyEventPress;
@@ -15,13 +16,13 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Player extends GameObject implements Physics {
-    FrameCounter fireCounter;
     BoxCollider boxCollider;
+    Action action;
     public Player() {
         super();
         this.createRenderer();
         this.position.set(200,300);
-        this.fireCounter = new FrameCounter(20);
+        this.action = new ActionFire();
         this.boxCollider = new BoxCollider(this.position, 32, 48);
     }
 
@@ -41,11 +42,7 @@ public class Player extends GameObject implements Physics {
     @Override
     public void run() {
         this.move();
-        if(this.fireCounter.run()) {
-            if (KeyEventPress.isFirePress) {
-                this.fire();
-            }
-        }
+        this.action.run(this);
         super.run();
     }
 
@@ -72,20 +69,7 @@ public class Player extends GameObject implements Physics {
         this.velocity.set(vx, vy);
     }
 
-    private void fire() {
-        PlayerBulletType1 bullet = GameObject.recycle(PlayerBulletType1.class);
-        bullet.position.set(this.position);
 
-        PlayerBulletType2 bullet2 = GameObject.recycle(PlayerBulletType2.class);
-        bullet2.position.set(this.position.add(-25, 0));
-        bullet2.velocity.set(-5, -5);
-
-//        PlayerBulletType2 bullet3 = GameObject.recycle(PlayerBulletType2.class);
-//        bullet3.position.set(this.position.add(25, 0));
-//        bullet3.velocity.set(5, -5);
-
-        this.fireCounter.reset();
-    }
 
     @Override
     public BoxCollider getBoxCollider() {

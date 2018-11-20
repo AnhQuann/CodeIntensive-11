@@ -2,7 +2,7 @@ package base;
 
 public class FrameCounter {
     int countMax;
-    int count;
+    public int count;
 
     public FrameCounter(int countMax) {
         this.countMax = countMax;
@@ -14,6 +14,7 @@ public class FrameCounter {
         //false - not yet done
         if (count < countMax) {
             count ++;
+            System.out.println("count"+ count);
             return false;
         } else {
             return true;

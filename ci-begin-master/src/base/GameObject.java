@@ -74,12 +74,13 @@ public class GameObject {
     public Renderer renderer;
     public boolean isActive;
     public Vector2D velocity;
-
+    public Vector2D anchor;
 
     public GameObject() {
         this.position = new Vector2D();
         this.isActive = true;
         this.velocity = new Vector2D();
+        this.anchor = new Vector2D(0.5f,0.5f);
     }
 
     public void destroy() {
